@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
+import org.jdom2.Attribute;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
@@ -36,15 +37,52 @@ public class BanqueManager {
 		
 		// 3-Ajout d'un nouveau compte
 		
-		CompteBancaire newAccount = new CompteBancaire(111111, "Baptiste", 6000, "Courant", LocalDateTime.now());
-		banque.add(newAccount);
+		//CompteBancaire newAccount = new CompteBancaire(111111, "Baptiste", 6000, "Courant", LocalDateTime.now());
+		//banque.add(newAccount);
 		
-		addNewAccountToXML("banque.xml",banque);
+		//addNewAccountToXML("banque.xml",banque);
+		
+		// 4-ajout d'un nouvel attribut
+		
+		addNewAttribute("banque.xml",banque,"typeBanque","Physique");
+		//addNewAttribute("banque.xml",banque,"typePersonne","Physique");
 
 	}
 	
+	public static void addNewAttribute(String pathXmlFile, List<CompteBancaire> banque, String nomAttribut, String valeurAttribut)
+	{
+		
+
+		try {
+		    // création de l'element racine en mémoire  de type Document
+            Document doc = new Document();
+            // création de l'élément racine : CompteBancaires
+            doc.setRootElement(new Element("CompteBancaires"));
+            
+            
+            for(CompteBancaire cb:banque)
+            {
+              Element temp = createCompteBancaireXMLElement(cb);
+              temp.setAttribute(nomAttribut, valeurAttribut);
+              
+              doc.getRootElement().addContent(temp);
+            }
+            
+            //XmlOutputter : objet pour ecrire dans un fichier .xml
+            XMLOutputter xmlOutput = new XMLOutputter();
+            xmlOutput.setFormat(Format.getPrettyFormat());
+            xmlOutput.output(doc, new FileWriter("banque.xml"));
+            System.out.println("File Saved!");
+       }
+	 catch (IOException io) {
+            System.out.println(io.getMessage());
+        }
+	}
+	
+	
 	public static void addNewAccountToXML(String pathXmlFile, List<CompteBancaire> banque)
 	{
+	        
 		try {
 		    // création de l'element racine en mémoire  de type Document
             Document doc = new Document();
