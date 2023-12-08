@@ -22,7 +22,7 @@ public class BanqueManager {
 
 	public static void main(String[] args) throws JDOMException {
 		
-		List<CompteBancaire> banque;
+		//List<CompteBancaire> banque;
 		System.out.println("Welcome to Our Bank \n");
 		
 		//1-faire la lecture des comptes bancaires et sauvegarde dans un fichier xml
@@ -33,7 +33,7 @@ public class BanqueManager {
 		//2-affichage des comptes à partir de la base de données
 		 
 		//System.out.println("\t 1)Affichage des comptes ");
-		banque = listComptesXML();
+		//banque = listComptesXML();
 		
 		
 		// 3-Ajout d'un nouveau compte
@@ -47,8 +47,44 @@ public class BanqueManager {
 		
 		//addNewAttribute("banque.xml","typeBanque","Physique");
 		//addNewAttribute("banque.xml","typePersonne","Physique");
-		addNewAttribute("banque.xml","ville","Paris");
+		//addNewAttribute("banque.xml","ville","Paris");
+		
+		// 5-supperimer un element selon le numéro
+		deleteAccount("banque.xml", 111111);
 
+	}
+	
+	public static void deleteAccount(String pathXmlFile, int numero) throws JDOMException
+	
+	{
+		try {
+			 SAXBuilder builder = new SAXBuilder();
+	         File xmlFile = new File(pathXmlFile);
+	         Document jdomDoc = (Document) builder.build(xmlFile);
+	         
+	         
+	         Element root = jdomDoc.getRootElement();
+	         
+	         List < Element > listOfCB = root.getChildren("CompteBancaire");
+           
+           
+           for(Element cb:listOfCB)
+           {
+            if(Integer.parseInt(cb.getChildText("numero"))==numero )
+            {
+            	root.removeContent(cb);
+            }
+           }
+           
+           
+           XMLOutputter xmlOutput = new XMLOutputter();
+           xmlOutput.setFormat(Format.getPrettyFormat());
+           xmlOutput.output(jdomDoc, new FileWriter("banque.xml"));
+           System.out.println("Compte Bancaire deleted!");
+      }
+	 catch (IOException io) {
+           System.out.println(io.getMessage());
+       }
 	}
 	
 	public static void addNewAttribute(String pathXmlFile, String nomAttribut, String valeurAttribut) throws JDOMException
