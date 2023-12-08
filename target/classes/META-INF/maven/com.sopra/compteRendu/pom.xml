@@ -15,7 +15,7 @@
 	<build>
 		<finalName>m2i</finalName>
 		<plugins>
-			<plugin>
+		<plugin>
         <artifactId>maven-assembly-plugin</artifactId>
         <version>3.0.0</version>
         <configuration>

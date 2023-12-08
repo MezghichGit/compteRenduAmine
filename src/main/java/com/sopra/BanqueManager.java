@@ -19,19 +19,53 @@ import org.jdom2.output.XMLOutputter;
 public class BanqueManager {
 
 	public static void main(String[] args) {
+		
+		List<CompteBancaire> banque;
 		System.out.println("Welcome to Our Bank \n");
 		
 		//1-faire la lecture des comptes bancaires et sauvegarde dans un fichier xml
 		//System.out.println("\t 1)Lecture des comptes ");
 		
-		 saisieComptes();
+		// saisieComptes();
 		
 		//2-affichage des comptes à partir de la base de données
 		 
 		//System.out.println("\t 1)Affichage des comptes ");
-		listComptesXML();
+		banque = listComptesXML();
+		
+		
+		// 3-Ajout d'un nouveau compte
+		
+		CompteBancaire newAccount = new CompteBancaire(111111, "Baptiste", 6000, "Courant", LocalDateTime.now());
+		banque.add(newAccount);
+		
+		addNewAccountToXML("banque.xml",banque);
 
 	}
+	
+	public static void addNewAccountToXML(String pathXmlFile, List<CompteBancaire> banque)
+	{
+		try {
+		    // création de l'element racine en mémoire  de type Document
+            Document doc = new Document();
+            // création de l'élément racine : CompteBancaires
+            doc.setRootElement(new Element("CompteBancaires"));
+            for(CompteBancaire cb:banque)
+            {
+              doc.getRootElement().addContent(createCompteBancaireXMLElement(cb));
+            }
+            
+            //XmlOutputter : objet pour ecrire dans un fichier .xml
+            XMLOutputter xmlOutput = new XMLOutputter();
+            xmlOutput.setFormat(Format.getPrettyFormat());
+            xmlOutput.output(doc, new FileWriter("banque.xml"));
+            System.out.println("File Saved!");
+       }
+	 catch (IOException io) {
+            System.out.println(io.getMessage());
+        }
+	}
+	
 	
 	private static Element createCompteBancaireXMLElement(CompteBancaire compteBancaire) {
         Element cbElement = new Element("CompteBancaire");
@@ -44,11 +78,11 @@ public class BanqueManager {
         return cbElement;
     }
 	
-	@SuppressWarnings("deprecation")
-	public static void listComptesXML()
+	public static List<CompteBancaire> listComptesXML()
 	{
 		//System.out.println("Parsing...");
 		final String fileName = "banque.xml";
+		 List <CompteBancaire> cbList = new ArrayList<CompteBancaire>();
         try {
             // we can create JDOM Document from DOM, SAX and STAX Parser Builder classes
             SAXBuilder builder = new SAXBuilder();
@@ -60,7 +94,7 @@ public class BanqueManager {
             
             List < Element > listOfAccounts = root.getChildren("CompteBancaire");
             
-            List <CompteBancaire> cbList = new ArrayList<CompteBancaire>();
+           
             
             for(Element cbElement: listOfAccounts) {
                 CompteBancaire cb = new CompteBancaire();
@@ -82,10 +116,12 @@ public class BanqueManager {
             }
            
             System.out.println(cbList);
+           
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return cbList;
 
 	}
 	public static void saisieComptes()

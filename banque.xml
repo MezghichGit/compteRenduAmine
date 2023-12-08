@@ -14,4 +14,18 @@
     <dateCreation>2023-12-08T11:59:53.220</dateCreation>
     <solde>1200.2</solde>
   </CompteBancaire>
+  <CompteBancaire>
+    <numero>102030</numero>
+    <proprietaire>mezghich</proprietaire>
+    <type>Courant</type>
+    <dateCreation>2023-12-08T14:50:17.620</dateCreation>
+    <solde>4000.0</solde>
+  </CompteBancaire>
+  <CompteBancaire>
+    <numero>111111</numero>
+    <proprietaire>Baptiste</proprietaire>
+    <type>Courant</type>
+    <dateCreation>2023-12-08T14:51:10.642</dateCreation>
+    <solde>6000.0</solde>
+  </CompteBancaire>
 </CompteBancaires>
