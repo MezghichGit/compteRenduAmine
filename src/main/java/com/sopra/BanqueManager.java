@@ -13,13 +13,14 @@ import java.util.Scanner;
 import org.jdom2.Attribute;
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
 public class BanqueManager {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws JDOMException {
 		
 		List<CompteBancaire> banque;
 		System.out.println("Welcome to Our Bank \n");
@@ -44,34 +45,36 @@ public class BanqueManager {
 		
 		// 4-ajout d'un nouvel attribut
 		
-		addNewAttribute("banque.xml",banque,"typeBanque","Physique");
-		//addNewAttribute("banque.xml",banque,"typePersonne","Physique");
+		//addNewAttribute("banque.xml","typeBanque","Physique");
+		//addNewAttribute("banque.xml","typePersonne","Physique");
+		addNewAttribute("banque.xml","ville","Paris");
 
 	}
 	
-	public static void addNewAttribute(String pathXmlFile, List<CompteBancaire> banque, String nomAttribut, String valeurAttribut)
+	public static void addNewAttribute(String pathXmlFile, String nomAttribut, String valeurAttribut) throws JDOMException
 	{
 		
 
 		try {
-		    // création de l'element racine en mémoire  de type Document
-            Document doc = new Document();
-            // création de l'élément racine : CompteBancaires
-            doc.setRootElement(new Element("CompteBancaires"));
+			 SAXBuilder builder = new SAXBuilder();
+	         File xmlFile = new File(pathXmlFile);
+	         Document jdomDoc = (Document) builder.build(xmlFile);
+	         
+	         
+	         Element root = jdomDoc.getRootElement();
+	         
+	         List < Element > listOfCB = root.getChildren("CompteBancaire");
             
             
-            for(CompteBancaire cb:banque)
+            for(Element cb:listOfCB)
             {
-              Element temp = createCompteBancaireXMLElement(cb);
-              temp.setAttribute(nomAttribut, valeurAttribut);
-              
-              doc.getRootElement().addContent(temp);
+            	cb.setAttribute(nomAttribut, valeurAttribut);
             }
             
-            //XmlOutputter : objet pour ecrire dans un fichier .xml
+            
             XMLOutputter xmlOutput = new XMLOutputter();
             xmlOutput.setFormat(Format.getPrettyFormat());
-            xmlOutput.output(doc, new FileWriter("banque.xml"));
+            xmlOutput.output(jdomDoc, new FileWriter("banque.xml"));
             System.out.println("File Saved!");
        }
 	 catch (IOException io) {
