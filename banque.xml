@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompteBancaires>
+  <CompteBancaire>
+    <numero>123</numero>
+    <proprietaire>amine</proprietaire>
+    <type>Courant</type>
+    <dateCreation>Fri Dec 08 11:18:06 WAT 2023</dateCreation>
+  </CompteBancaire>
+  <CompteBancaire>
+    <numero>456</numero>
+    <proprietaire>mohamed</proprietaire>
+    <type>Epargne</type>
+    <dateCreation>Fri Dec 08 11:18:22 WAT 2023</dateCreation>
+  </CompteBancaire>
+</CompteBancaires>
