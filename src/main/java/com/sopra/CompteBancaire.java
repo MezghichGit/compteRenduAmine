@@ -1,23 +1,27 @@
 package com.sopra;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class CompteBancaire {
 	
 	private int numCompte;
-	private String proprietaire;
-	private double solde;
-	private String typeCompte;
-	public Date getDateCreate() {
+	public LocalDateTime getDateCreate() {
 		return dateCreate;
 	}
 
-	public void setDateCreate(Date dateCreate) {
+	public void setDateCreate(LocalDateTime dateCreate) {
 		this.dateCreate = dateCreate;
 	}
 
-	private Date dateCreate;
-	public CompteBancaire(int numCompte, String proprietaire, double solde, String typeCompte, Date dateCreate) {
+	private String proprietaire;
+	private double solde;
+	private String typeCompte;
+	
+	
+
+	private LocalDateTime dateCreate;
+	public CompteBancaire(int numCompte, String proprietaire, double solde, String typeCompte, LocalDateTime dateCreate) {
 		super();
 		this.numCompte = numCompte;
 		this.proprietaire = proprietaire;
