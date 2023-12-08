@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 import org.jdom2.Attribute;
 import org.jdom2.Document;
@@ -21,8 +22,9 @@ import org.jdom2.output.XMLOutputter;
 public class BanqueManager {
 
 	public static void main(String[] args) throws JDOMException {
+		long start = System.nanoTime();
 		
-		//List<CompteBancaire> banque;
+		List<CompteBancaire> banque;
 		System.out.println("Welcome to Our Bank \n");
 		
 		//1-faire la lecture des comptes bancaires et sauvegarde dans un fichier xml
@@ -33,12 +35,12 @@ public class BanqueManager {
 		//2-affichage des comptes à partir de la base de données
 		 
 		//System.out.println("\t 1)Affichage des comptes ");
-		//banque = listComptesXML();
+		banque = listComptesXML();
 		
 		
 		// 3-Ajout d'un nouveau compte
 		
-		//CompteBancaire newAccount = new CompteBancaire(111111, "Baptiste", 6000, "Courant", LocalDateTime.now());
+		//CompteBancaire newAccount = new CompteBancaire(11111123, "Baptiste", 6000, "Courant", LocalDateTime.now());
 		//banque.add(newAccount);
 		
 		//addNewAccountToXML("banque.xml",banque);
@@ -50,7 +52,18 @@ public class BanqueManager {
 		//addNewAttribute("banque.xml","ville","Paris");
 		
 		// 5-supperimer un element selon le numéro
-		deleteAccount("banque.xml", 111111);
+		deleteAccount("banque.xml", 11111123);
+		
+		Runtime runtime = Runtime.getRuntime();
+		System.out.println("runtime.totalMemory() : "+runtime.totalMemory());
+		System.out.println("runtime.freeMemory() : "+runtime.freeMemory());
+		long end = System.nanoTime();
+		long diff = end-start;
+		
+		long milliseconds = TimeUnit.MILLISECONDS.toMillis(diff);
+		System.out.println(milliseconds);
+		
+		System.out.println("Used Memory:" + (runtime.totalMemory() - runtime.freeMemory()) / 1024 + " Ko");
 
 	}
 	
