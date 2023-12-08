@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -25,7 +24,7 @@ public class BanqueManager {
 		//1-faire la lecture des comptes bancaires et sauvegarde dans un fichier xml
 		//System.out.println("\t 1)Lecture des comptes ");
 		
-		// saisieComptes();
+		 saisieComptes();
 		
 		//2-affichage des comptes à partir de la base de données
 		 
@@ -135,7 +134,7 @@ public class BanqueManager {
 		System.out.println("Donner le nom du proprietaire du compte");
 		String nom = scanner.next();
 		cb.setProprietaire(nom);
-		
+
 		System.out.println("Donner le solde initial");
 		double solde = scanner.nextDouble();
 		cb.setSolde(solde);
